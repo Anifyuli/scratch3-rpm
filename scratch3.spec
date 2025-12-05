@@ -18,6 +18,12 @@ BuildRequires:  npm
 BuildRequires:  git-core
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  nss
+BuildRequires:  gtk3
+BuildRequires:  libXScrnSaver
+BuildRequires:  alsa-lib
+BuildRequires:  cups-libs
+BuildRequires:  mesa-libgbm
 
 Requires:       fuse-libs
 
