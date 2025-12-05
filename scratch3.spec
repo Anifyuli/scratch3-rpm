@@ -9,7 +9,7 @@ License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
 Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{version}.tar.gz
 Source1:        scratch3.desktop
-Source2:        scratch3.xml
+Source2:        scratch3-mime.xml
 
 ExclusiveArch:  x86_64 aarch64
 
@@ -68,7 +68,7 @@ exec /usr/lib/scratch3/scratch-desktop "$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/%{name}
 
-# Install icon (PATH YANG BENER!)
+# Install icon
 install -Dm644 src/icon/ScratchDesktop.png \
     %{buildroot}%{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
 install -Dm644 src/icon/ScratchDesktop.svg \
@@ -78,9 +78,9 @@ install -Dm644 src/icon/ScratchDesktop.svg \
 install -Dm644 %{SOURCE1} \
     %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-# Install appdata
+# Install MIME types
 install -Dm644 %{SOURCE2} \
-    %{buildroot}%{_metainfodir}/%{name}.xml
+    %{buildroot}%{_datadir}/mime/packages/%{name}.xml
 
 # Install licenses
 install -Dm644 LICENSE \
@@ -90,7 +90,6 @@ install -Dm644 TRADEMARK \
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.xml
 
 %files
 %license LICENSE
@@ -99,7 +98,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.xml
 %{_libdir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
-%{_metainfodir}/%{name}.xml
+%{_datadir}/mime/packages/%{name}.xml
 
 %changelog
 * Fri Dec 05 2025 Anifyuliansyah <anifyuli007@outlook.co.id> - 3.31.1-1
