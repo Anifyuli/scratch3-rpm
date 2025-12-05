@@ -55,6 +55,11 @@ npm run build:dist
 install -dm755 %{buildroot}%{_libdir}/%{name}
 cp -r dist/linux-unpacked/* %{buildroot}%{_libdir}/%{name}/
 
+# Copy electron binary if missing
+if [ ! -f %{buildroot}%{_libdir}/%{name}/electron ] && [ ! -f %{buildroot}%{_libdir}/%{name}/scratch-desktop ]; then
+    cp node_modules/electron/dist/electron %{buildroot}%{_libdir}/%{name}/scratch-desktop
+fi
+
 # Create launcher script
 install -dm755 %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/%{name} <<'EOF'
@@ -63,9 +68,11 @@ exec /usr/lib/scratch3/scratch-desktop "$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/%{name}
 
-# Install icon
-install -Dm644 buildResources/icon.png \
+# Install icon (PATH YANG BENER!)
+install -Dm644 src/icon/ScratchDesktop.png \
     %{buildroot}%{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
+install -Dm644 src/icon/ScratchDesktop.svg \
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 # Install desktop file
 install -Dm644 %{SOURCE1} \
@@ -74,6 +81,12 @@ install -Dm644 %{SOURCE1} \
 # Install appdata
 install -Dm644 %{SOURCE2} \
     %{buildroot}%{_metainfodir}/%{name}.xml
+
+# Install licenses
+install -Dm644 LICENSE \
+    %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
+install -Dm644 TRADEMARK \
+    %{buildroot}%{_datadir}/licenses/%{name}/TRADEMARK
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
