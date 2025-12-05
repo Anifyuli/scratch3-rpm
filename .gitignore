@@ -1,0 +1,4 @@
+v*
+rpmbuild/
+result/
+*.rpm
