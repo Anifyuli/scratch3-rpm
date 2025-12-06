@@ -56,9 +56,17 @@ npm run fetch
 npm run build:dist
 
 %install
+# Detect build output directory based on arch
+%ifarch x86_64
+DIST_DIR="dist/linux-unpacked"
+%endif
+%ifarch aarch64
+DIST_DIR="dist/linux-arm64-unpacked"
+%endif
+
 # Install the built application
 install -dm755 %{buildroot}%{_libdir}/%{name}
-cp -r dist/linux-unpacked/* %{buildroot}%{_libdir}/%{name}/
+cp -r ${DIST_DIR}/* %{buildroot}%{_libdir}/%{name}/
 
 # Copy electron binary if missing
 if [ ! -f %{buildroot}%{_libdir}/%{name}/electron ] && [ ! -f %{buildroot}%{_libdir}/%{name}/scratch-desktop ]; then
@@ -67,9 +75,9 @@ fi
 
 # Create launcher script
 install -dm755 %{buildroot}%{_bindir}
-cat > %{buildroot}%{_bindir}/%{name} <<'EOF'
+cat > %{buildroot}%{_bindir}/%{name} <<EOF
 #!/bin/bash
-exec /usr/lib/scratch3/scratch-desktop "$@"
+exec %{_libdir}/%{name}/scratch-desktop "\$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/%{name}
 
