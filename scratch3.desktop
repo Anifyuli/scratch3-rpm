@@ -15,6 +15,6 @@ Exec=scratch3-desktop %f
 Terminal=false
 Type=Application
 StartupNotify=false
-Icon=scratch3
+Icon=scratch3-desktop
 Categories=Development;Education
 MimeType=application/x-scratch-project;application/x-scratch2-project;application/x-scratch3-project;
