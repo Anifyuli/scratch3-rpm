@@ -6,7 +6,7 @@
 %global _enable_debug_packages 0
 %global __strip /bin/true
 
-Name:           scratch3
+Name:           scratch3-desktop
 Version:        3.31.1
 Release:        1%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
