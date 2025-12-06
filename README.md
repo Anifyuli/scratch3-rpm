@@ -46,7 +46,7 @@ Scratch is developed by the Scratch Foundation and is designed to promote comput
 
 ```bash
 # Enable the Copr repository
-sudo dnf copr enable anifyuli/scratch3
+sudo dnf copr enable anifyuliansyah/scratch3
 
 # Install Scratch 3
 sudo dnf install scratch3-desktop
