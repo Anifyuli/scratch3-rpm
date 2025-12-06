@@ -97,7 +97,7 @@ install -Dm644 TRADEMARK \
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files
-%license LICENSE
+%license LICENSE TRADEMARK
 %doc README.md
 %{_bindir}/%{name}
 %{_libdir}/%{name}/
