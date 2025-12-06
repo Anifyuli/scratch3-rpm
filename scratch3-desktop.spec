@@ -7,8 +7,8 @@
 %global __strip /bin/true
 
 Name:           scratch3-desktop
-Version:        3.31.2
-Release:        1%{?dist}
+Version:        3.31.1
+Release:        2%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
