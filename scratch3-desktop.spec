@@ -8,7 +8,7 @@
 
 Name:           scratch3-desktop
 Version:        3.31.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
@@ -104,6 +104,21 @@ install -Dm644 TRADEMARK \
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
+%post
+# Update icon cache after installation
+touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+# Update icon cache after uninstallation
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+# Refresh icon cache after transaction
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %files
 %license LICENSE TRADEMARK
 %doc README.md
@@ -115,6 +130,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
 
 %changelog
+* Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-3
+- Add %postun & %post
+
 * Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-2
 - Change scratch3 -> scratch3-desktop spec name
 
