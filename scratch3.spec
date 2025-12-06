@@ -1,6 +1,11 @@
 # RPM specfile for Scratch 3
 # Maintainer: Anifyuliansyah <anifyuli007@outlook.co.id>
 
+# Disable debug packages
+%global debug_package %{nil}
+%global _enable_debug_packages 0
+%global __strip /bin/true
+
 Name:           scratch3
 Version:        3.31.1
 Release:        1%{?dist}
