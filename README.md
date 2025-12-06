@@ -7,7 +7,7 @@
 **Unofficial RPM packages for Scratch 3 Desktop on Fedora, RHEL, and derivatives**
 
 [![⚡️ Powered By: Copr](https://img.shields.io/badge/⚡️_Powered_by-COPR-blue?style=flat-square)](https://copr.fedorainfracloud.org/)
-[![Copr build status](https://copr.fedorainfracloud.org/coprs/anifyuli/scratch3/package/scratch3-desktop/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/anifyuli/scratch3/package/scratch3-desktop/)
+[![Copr build status](https://copr.fedorainfracloud.org/coprs/anifyuliansyah/scratch3/package/scratch3-desktop/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/anifyuliansyah/scratch3/package/scratch3-desktop/)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Anifyuli/scratch3-rpm)](https://github.com/Anifyuli/scratch3-rpm/issues)
 
