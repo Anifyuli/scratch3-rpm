@@ -7,7 +7,7 @@
 %global __strip /bin/true
 
 Name:           scratch3-desktop
-Version:        3.31.1
+Version:        3.31.2
 Release:        1%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
@@ -115,5 +115,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
 
 %changelog
+* Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-2
+- Change scratch3 -> scratch3-desktop spec name
+
 * Fri Dec 05 2025 Anifyuliansyah <anifyuli007@outlook.co.id> - 3.31.1-1
 - Initial package
