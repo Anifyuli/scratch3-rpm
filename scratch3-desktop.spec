@@ -6,9 +6,15 @@
 %global _enable_debug_packages 0
 %global __strip /bin/true
 
+%if 0%{?el9}
+%global pkgver 3.31.3
+%else
+%global pkgver 3.32.0
+%endif
+
 Name:           scratch3-desktop
-Version:        3.32.0
-Release:        1%{?dist}
+Version:        %{pkgver}
+Release:        2%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
@@ -130,7 +136,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/mime/packages/%{name}.xml
 
 %changelog
-* Thu June 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-1
+* Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-2
+- Pin 3.31.3 for EPEL 9
+
+* Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-1
 - Bump version to 3.32.0
 
 * Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-3
