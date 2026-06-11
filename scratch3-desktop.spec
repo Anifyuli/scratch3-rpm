@@ -7,7 +7,7 @@
 %global __strip /bin/true
 
 %if 0%{?el9}
-%global pkgver 3.31.3
+%global pkgver 3.31.1
 %else
 %global pkgver 3.32.0
 %endif
@@ -137,7 +137,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
 * Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-2
-- Pin 3.31.3 for EPEL 9
+- Pin 3.31.1 for EPEL 9
 
 * Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-1
 - Bump version to 3.32.0
