@@ -18,7 +18,7 @@ Release:        2%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
-Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{version}.tar.gz
+Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{pkgver}.tar.gz
 Source1:        scratch3.desktop
 Source2:        scratch3-mime.xml
 
