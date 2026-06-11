@@ -7,8 +7,8 @@
 %global __strip /bin/true
 
 Name:           scratch3-desktop
-Version:        3.31.1
-Release:        3%{?dist}
+Version:        3.32.0
+Release:        1%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
@@ -130,6 +130,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/mime/packages/%{name}.xml
 
 %changelog
+* Thu June 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-1
+- Bump version to 3.32.0
+
 * Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-3
 - Add %postun & %post
 
