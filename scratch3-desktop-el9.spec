@@ -1,0 +1,149 @@
+# RPM specfile for Scratch 3 (EPEL 9 build, pinned to upstream v3.31.1)
+# Maintainer: Anifyuliansyah <anifyuli007@outlook.co.id>
+
+# Disable debug packages
+%global debug_package %{nil}
+%global _enable_debug_packages 0
+%global __strip /bin/true
+
+Name:           scratch3-desktop
+Version:        3.31.1
+Release:        2%{?dist}
+Summary:        Scratch 3.0 as a self-contained desktop application
+License:        AGPL-3.0
+URL:            https://github.com/scratchfoundation/scratch-desktop
+Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{version}.tar.gz
+Source1:        scratch3.desktop
+Source2:        scratch3-mime.xml
+
+ExclusiveArch:  x86_64 aarch64
+
+BuildRequires:  nodejs >= 16
+BuildRequires:  npm
+BuildRequires:  git-core
+BuildRequires:  desktop-file-utils
+BuildRequires:  libappstream-glib
+BuildRequires:  nss
+BuildRequires:  gtk3
+BuildRequires:  libXScrnSaver
+BuildRequires:  alsa-lib
+BuildRequires:  cups-libs
+BuildRequires:  mesa-libgbm
+
+Requires:       fuse-libs
+
+%description
+Scratch is coding learning platform for kids, designed, developed, and 
+moderated by the Scratch Foundation. Scratch promotes computational thinking 
+and problem solving skills; creative teaching and learning; self-expression 
+and collaboration; and equity in computing.
+
+NOTE: This is unofficial builds for RPM based distros
+
+%prep
+%autosetup -n scratch-desktop-%{version}
+
+%build
+# Patch: Set window icon
+sed -i "s#const window = new BrowserWindow({#const window = new BrowserWindow({ icon: '/usr/share/icons/hicolor/1024x1024/apps/scratch3.png',#g" ./src/main/index.js
+
+# Install dependencies
+npm ci --legacy-peer-deps
+
+# Build Scratch
+npm run clean
+npm run fetch
+npm run build:dist
+
+%install
+# Detect build output directory based on arch
+%ifarch x86_64
+DIST_DIR="dist/linux-unpacked"
+%endif
+%ifarch aarch64
+DIST_DIR="dist/linux-arm64-unpacked"
+%endif
+
+# Install the built application
+install -dm755 %{buildroot}%{_libdir}/%{name}
+cp -r ${DIST_DIR}/* %{buildroot}%{_libdir}/%{name}/
+
+# Copy electron binary if missing
+if [ ! -f %{buildroot}%{_libdir}/%{name}/electron ] && [ ! -f %{buildroot}%{_libdir}/%{name}/scratch-desktop ]; then
+    cp node_modules/electron/dist/electron %{buildroot}%{_libdir}/%{name}/scratch-desktop
+fi
+
+# Create launcher script
+install -dm755 %{buildroot}%{_bindir}
+cat > %{buildroot}%{_bindir}/%{name} <<EOF
+#!/bin/bash
+exec %{_libdir}/%{name}/scratch-desktop "\$@"
+EOF
+chmod 755 %{buildroot}%{_bindir}/%{name}
+
+# Install icon
+install -Dm644 src/icon/ScratchDesktop.png \
+    %{buildroot}%{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
+install -Dm644 src/icon/ScratchDesktop.svg \
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+
+# Install desktop file
+install -Dm644 %{SOURCE1} \
+    %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+# Install MIME types
+install -Dm644 %{SOURCE2} \
+    %{buildroot}%{_datadir}/mime/packages/%{name}.xml
+
+# Install licenses
+install -Dm644 LICENSE \
+    %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
+install -Dm644 TRADEMARK \
+    %{buildroot}%{_datadir}/licenses/%{name}/TRADEMARK
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+%post
+# Update icon cache after installation
+touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+# Update icon cache after uninstallation
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+# Refresh icon cache after transaction
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+%files
+%license LICENSE TRADEMARK
+%doc README.md
+%{_bindir}/%{name}
+%{_libdir}/%{name}/
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/1024x1024/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%{_datadir}/mime/packages/%{name}.xml
+
+%changelog
+* Sat Nov 07 2026 Anifyuliansyah <anifyuli007@outlook.co.id> - 3.31.1-2
+- Separate EPEL 9 spec; Source0 hardcoded to v3.31.1 so SRPM and EL9 build agree
+
+* Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-2
+- Pin 3.31.1 for EPEL 9
+
+* Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-1
+- Bump version to 3.32.0
+
+* Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-3
+- Add %postun & %post
+
+* Sat Dec 06 2025 Anifyuliansyah <anifyuli007@outlook.co.id> -3.31.1-2
+- Change scratch3 -> scratch3-desktop spec name
+
+* Fri Dec 05 2025 Anifyuliansyah <anifyuli007@outlook.co.id> - 3.31.1-1
+- Initial package
