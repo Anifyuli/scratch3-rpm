@@ -6,19 +6,13 @@
 %global _enable_debug_packages 0
 %global __strip /bin/true
 
-%if 0%{?el9}
-%global pkgver 3.31.1
-%else
-%global pkgver 3.32.0
-%endif
-
 Name:           scratch3-desktop
-Version:        %{pkgver}
-Release:        2%{?dist}
+Version:        3.32.0
+Release:        3%{?dist}
 Summary:        Scratch 3.0 as a self-contained desktop application
 License:        AGPL-3.0
 URL:            https://github.com/scratchfoundation/scratch-desktop
-Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{pkgver}.tar.gz
+Source0:        https://github.com/scratchfoundation/scratch-desktop/archive/refs/tags/v%{version}.tar.gz
 Source1:        scratch3.desktop
 Source2:        scratch3-mime.xml
 
@@ -136,6 +130,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/mime/packages/%{name}.xml
 
 %changelog
+* Sat Nov 07 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-3
+- Fedora build only; EPEL 9 moved to scratch3-desktop-el9.spec
+
 * Thu Jun 11 2026 Anifyuliansyah <anifyuli007@outlook.co.id> 3.32.0-2
 - Pin 3.31.1 for EPEL 9
 
