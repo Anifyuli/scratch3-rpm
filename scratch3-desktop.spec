@@ -22,15 +22,24 @@ BuildRequires:  nodejs >= 16
 BuildRequires:  npm
 BuildRequires:  git-core
 BuildRequires:  desktop-file-utils
+%if 0%{?suse_version}
+BuildRequires:  appstream-glib
+BuildRequires:  libgbm1
+%else
 BuildRequires:  libappstream-glib
+BuildRequires:  mesa-libgbm
+%endif
 BuildRequires:  nss
 BuildRequires:  gtk3
 BuildRequires:  libXScrnSaver
 BuildRequires:  alsa-lib
 BuildRequires:  cups-libs
-BuildRequires:  mesa-libgbm
 
+%if 0%{?suse_version}
+Requires:       libfuse3-4
+%else
 Requires:       fuse-libs
+%endif
 
 %description
 Scratch is coding learning platform for kids, designed, developed, and 
